@@ -10,6 +10,7 @@
     }
   },
   "run_list": [
-    "recipe[etcd]"
+    "recipe[etcd]",
+    "recipe[docker]"
   ]
 }
