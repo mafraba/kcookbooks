@@ -1,0 +1,15 @@
+{
+  "name": "kube-master",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The base role for systems that serve as master in a kubernetes cluster",
+  "override_attributes": {
+    "etcd": {
+      "url": "https://github.com/coreos/etcd/releases/download/v0.4.6/etcd-v0.4.6-linux-amd64.tar.gz",
+      "sha256": "b351d05f68d2a8f3fce2d4038f3ecf3408901ac2ec37240ff0043b4c989484f5"
+    }
+  },
+  "run_list": [
+    "recipe[etcd]"
+  ]
+}

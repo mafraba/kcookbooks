@@ -1,14 +1,40 @@
-Vagrant.configure("2") do |config|
-  config.vm.provision "chef_zero" do |chef|
-    # Specify the local paths where Chef data is stored
-    chef.cookbooks_path = "cookbooks"
-    chef.roles_path = "roles"
-    chef.nodes_path = "nodes"
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-    # Add a recipe
-    chef.add_recipe "apache"
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
 
-    # Or maybe a role
-    chef.add_role "web"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.define "kube-master" do |master|
+    master.vm.box = "trusty64"
+    master.vm.network "private_network", ip: "192.168.33.10"
+    master.vm.hostname = "kube-master"
+    master.vm.provision "chef_zero" do |chef|
+      # Specify the local paths where Chef data is stored
+      chef.cookbooks_path = "cookbooks"
+      chef.roles_path = "roles"
+      chef.nodes_path = "nodes"
+
+      # Add a recipe
+      # chef.add_recipe "etcd"
+
+      # Or maybe a role
+      chef.add_role "kube-master"
+    end
   end
+
+  # config.vm.define "kube-slave-01" do |slave|
+  #   slave.vm.box = "trusty64"
+  #   slave.vm.network "private_network", ip: "192.168.33.11"
+  #   slave.vm.hostname = "kube-slave-01"
+  # end
+
+  # config.vm.define "kube-slave-02" do |slave|
+  #   slave.vm.box = "trusty64"
+  #   slave.vm.network "private_network", ip: "192.168.33.12"
+  #   slave.vm.hostname = "kube-slave-02"
+  # end
 end
