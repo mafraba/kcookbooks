@@ -10,6 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # using a specific IP.
   config.vm.define "kube-master" do |master|
     master.vm.box = "trusty64"
+    master.vm.box_url = 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box'
     master.vm.network "private_network", ip: "192.168.33.10"
     master.vm.hostname = "kube-master"
     master.vm.provision "chef_zero" do |chef|

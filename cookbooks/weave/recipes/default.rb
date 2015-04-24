@@ -44,9 +44,10 @@ execute "ip route add 224.0.0.0/4 dev weave"
 docker_settings_file = Docker::Helpers.docker_settings_file(node)
 docker_service = Docker::Helpers.docker_service(node)
 
-docker_opts = Hash[Docker::Helpers.daemon_cli_args(node).split.map{|opt| opt.split('=',2)}]
-docker_opts.merge!('--bridge' => 'weave', '--insecure-registry' => '0.0.0.0/0')
-docker_opts_str = docker_opts.map{|opt, value| "#{opt}=#{value}" }.join(' ')
+# docker_opts = Hash[Docker::Helpers.daemon_cli_args(node).split.map{|opt| opt.split('=',2)}]
+# docker_opts.merge!('--bridge' => 'weave', '--insecure-registry' => '0.0.0.0/0')
+# docker_opts_str = docker_opts.map{|opt, value| "#{opt}=#{value}" }.join(' ')
+docker_opts_str = "--bridge=weave --insecure-registry=0.0.0.0/0"
 
 template docker_settings_file do
   source 'docker.sysconfig.erb'
@@ -72,18 +73,29 @@ ruby_block "update_docker_config" do
   notifies :create, "template[#{docker_settings_file}]", :immediately
 end
 
+# ruby_block "update docker config" do
+#   block do
+#     fe = Chef::Util::FileEdit.new("/etc/default/docker")
+#     fe.search_file_replace_line(/DOCKER_OPTS/,
+#                                "DOCKER_OPTS=#{docker_opts_str}")
+#     fe.write_file
+#   end
+# end
 
 docker_image "zettio/weave" do 
 	action :pull
+  cmd_timeout 600
 end
 
-docker_image "zettio/weavetools" do
-	action :pull
-end
+# docker_image "zettio/weavetools" do
+# 	action :pull
+#   cmd_timeout 600
+# end
 
-docker_image "zettio/weavedns" do                                                                                                             
-  action :pull
-end
+# docker_image "zettio/weavedns" do                                                                                                             
+#   action :pull
+#   cmd_timeout 600
+# end
 
 if node["weave"]["ismaster"]
 	execute "weave launch -password #{node['weave']['password']}"

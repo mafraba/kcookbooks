@@ -12,12 +12,11 @@
       "ismaster": true,
       "password": "pepe",
       "cidr": "10.9.0.0/16",
-      "host_cidr": "10.9.1.0/24"
+      "host_cidr": "10.9.1.1/24"
     },
     "docker" : {
       "docker_daemon_timeout" : 30,
-      "host" : ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2376"],
-      "storage_driver" : "aufs"
+      "host" : ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2376"]
     }
   },
   "run_list": [
