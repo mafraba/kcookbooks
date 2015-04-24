@@ -25,7 +25,7 @@ end
 
 remote_file "/usr/local/bin/weave-helper" do
 	mode '0755'
-	source node["weave"]["binary_url"]
+	source node["weave"]["helper_url"]
 end
 
   #     WEAVE_PEERS="192.168.33.10"
@@ -103,4 +103,4 @@ else
   execute "weave launch -password #{node['weave']['password']} #{node['weave']['master_fqdn']}"
 end
 
-execute "weave-helper"
+execute "weave-helper #{node['weave']['nic']} &"

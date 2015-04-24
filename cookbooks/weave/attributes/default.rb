@@ -1,6 +1,7 @@
 default["weave"]["ismaster"] = false
 default["weave"]["password"] = "Hello_Pepe"
 default["weave"]["master_fqdn"] = nil
+default["weave"]["nic"] = 'eth0'
 default["weave"]["cidr"] = "10.9.0.0/16"
 default["weave"]["bridge_cidr"] = nil
 default["weave"]["binary_url"] = "https://github.com/zettio/weave/releases/download/latest_release/weave"

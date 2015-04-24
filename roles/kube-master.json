@@ -12,7 +12,8 @@
       "ismaster": true,
       "password": "pepe",
       "cidr": "10.9.0.0/16",
-      "host_cidr": "10.9.1.1/24"
+      "host_cidr": "10.9.1.1/24",
+      "nic": "eth1"
     },
     "docker" : {
       "docker_daemon_timeout" : 30,
