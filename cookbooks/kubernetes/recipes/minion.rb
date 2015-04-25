@@ -1,9 +1,7 @@
 #
-
 include_recipe 'kubernetes::default'
 
-# define kubernetes master services
-%w(kube-apiserver kube-controller-manager kube-scheduler).each do |file|
+%w(kubelet kube-proxy).each do |file|
 
   cookbook_file "/etc/init/#{file}.conf" do
     source "init_conf/#{file}.conf"
